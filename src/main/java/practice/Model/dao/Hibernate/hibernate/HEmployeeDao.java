@@ -31,6 +31,11 @@ public class HEmployeeDao implements EmployeeDao {
     }
 
     @Override
+    public Employee findByName(String name) {
+        return (Employee) sessionFactory.getCurrentSession().createQuery("SELECT e from Employee e where e.name like :name").setParameter("name", name).uniqueResult();
+    }
+
+    @Override
     public void remove(Employee employee) {
         sessionFactory.getCurrentSession().delete(employee);
     }

@@ -23,6 +23,11 @@ public class HDishDao implements DishDao{
         return sessionFactory.getCurrentSession().createQuery("select d from Dish d").list();
     }
 
+    @Override
+    public Dish findByName(String name) {
+        return (Dish) sessionFactory.getCurrentSession().createQuery("SELECT d from Dish d where d.name like :name").setParameter("name", name).uniqueResult();
+    }
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

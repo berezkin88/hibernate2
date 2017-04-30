@@ -9,6 +9,9 @@ default-autowire="byName"
     <bean id="employeeController" class="practice.Model.controller.EmployeeController"/>
     <bean id="employeeDao" class="practice.Model.dao.Hibernate.hibernate.HEmployeeDao"/>
 
+    <bean id="orderController" class="practice.Model.controller.OrderController"/>
+    <bean id="orderDao" class="practice.Model.dao.Hibernate.hibernate.HOrderDao"/>
+
     <bean id="dishController" class="practice.Model.controller.DishController"/>
 
     <bean id="dishDao" class="practice.Model.dao.Hibernate.hibernate.HDishDao"/>

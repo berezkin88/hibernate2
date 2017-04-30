@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -26,8 +26,8 @@ public class Order {
     @ManyToMany()
     @JoinTable(
             name = "dish_to_order",
-            joinColumns = @JoinColumn(name = "dish_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "dish_id")
     )
     private List<Dish> dishes;
 
@@ -37,7 +37,27 @@ public class Order {
     @Column(name = "order_date")
     private Date orderDate;
 
+//    @Override
+//    public String toString() {
+//        return "Orders{" +
+//                "id=" + id +
+//                ", waiter=" + waiter +
+//                ", tableNumber=" + tableNumber +
+//                ", orderDate=" + orderDate +
+//                '}';
+//    }
 
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "id=" + id +
+                ", waiter=" + waiter +
+                ", dishes=" + dishes +
+                ", tableNumber=" + tableNumber +
+                ", orderDate=" + orderDate +
+                '}';
+    }
 
     public long getId() {
         return id;
