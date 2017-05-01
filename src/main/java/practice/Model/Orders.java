@@ -23,7 +23,7 @@ public class Orders {
     @JoinColumn(name = "employee_id")
     private Employee waiter;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "dish_to_order",
             joinColumns = @JoinColumn(name = "order_id"),
@@ -37,22 +37,10 @@ public class Orders {
     @Column(name = "order_date")
     private Date orderDate;
 
-//    @Override
-//    public String toString() {
-//        return "Orders{" +
-//                "id=" + id +
-//                ", waiter=" + waiter +
-//                ", tableNumber=" + tableNumber +
-//                ", orderDate=" + orderDate +
-//                '}';
-//    }
-
-
     @Override
     public String toString() {
         return "Orders{" +
                 "id=" + id +
-                ", waiter=" + waiter +
                 ", dishes=" + dishes +
                 ", tableNumber=" + tableNumber +
                 ", orderDate=" + orderDate +

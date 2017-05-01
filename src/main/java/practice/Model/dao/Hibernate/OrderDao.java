@@ -13,4 +13,5 @@ public interface OrderDao {
 
     List<Orders> findAll();
 
+    void removeAll();
 }

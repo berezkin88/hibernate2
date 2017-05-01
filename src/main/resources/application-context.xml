@@ -5,7 +5,10 @@
 default-autowire="byName"
 >
 
-    <bean id="main" class="practice.Main"/>
+    <bean id="main" class="practice.Main" init-method="init">
+        <property name="reInit" value="true"/>
+    </bean>
+
     <bean id="employeeController" class="practice.Model.controller.EmployeeController"/>
     <bean id="employeeDao" class="practice.Model.dao.Hibernate.hibernate.HEmployeeDao"/>
 

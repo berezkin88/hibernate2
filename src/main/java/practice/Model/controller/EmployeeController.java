@@ -1,13 +1,13 @@
 package practice.Model.controller;
 
 import org.springframework.transaction.annotation.Transactional;
+
 import practice.Model.Employee;
+import practice.Model.Waiter;
 import practice.Model.dao.Hibernate.EmployeeDao;
 import practice.Model.Position;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Alexander on 28/04/2017.
@@ -18,20 +18,32 @@ public class EmployeeController {
     private EmployeeDao employeeDao;
 
     @Transactional
-    public void createEmployee(){
-        Set<Employee> allEmployees = new HashSet<>(employeeDao.findAll());
+    public void initEmployee(){
+//        Set<Employee> allEmployees = new HashSet<>(employeeDao.findAll());
 
-        Employee employee = new Employee();
+        Waiter john = new Waiter();
 //        employee.setId(1L);
-        employee.setName("John");
-        employee.setSurname("Smith");
-        employee.setPosition(Position.WAITER);
-        employee.setTelephoneNumber("555-55-55");
-        employee.setSalary(25000.0F);
-        if (!allEmployees.contains(employee)){
-            employeeDao.save(employee);
+        john.setName("John");
+        john.setSurname("Smith");
+        john.setPosition(Position.WAITER);
+        john.setTelephoneNumber("555-55-55");
+        john.setSalary(25000.0F);
+//        if (!allEmployees.contains(employee)){
+//            employeeDao.save(employee);
+//
+//        }
+        employeeDao.save(john);
 
-        }
+
+        Waiter mary = new Waiter();
+        mary.setName("Mary");
+        mary.setSurname("Smith");
+        mary.setPosition(Position.WAITER);
+        mary.setTelephoneNumber("555-55-55");
+        mary.setSalary(25000.0F);
+        employeeDao.save(mary);
+
+
     }
 
     @Transactional
@@ -43,6 +55,22 @@ public class EmployeeController {
     public Employee getEmployeeByName(String name) {
         return employeeDao.findByName(name);
     }
+
+    @Transactional
+    public void removeAllEmployees() {
+        employeeDao.removeAll();
+    }
+
+    @Transactional
+    public void printWaiter(){
+        employeeDao.findAll().forEach(System.out::println);
+    }
+
+    @Transactional
+    public void printEmployee(long id) {
+        System.out.println(employeeDao.load(id));
+    }
+
 
     public void setEmployeeDao(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;

@@ -18,4 +18,6 @@ public interface EmployeeDao {
     Employee findByName (String name);
 
     void remove(Employee employee);
+
+    void removeAll();
 }

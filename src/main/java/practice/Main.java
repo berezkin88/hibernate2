@@ -18,30 +18,32 @@ public class Main {
     private DishController dishController;
     private OrderController orderController;
 
+    private boolean reInit = true;
+
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml", "hibernate-context.xml");
-        Main main = applicationContext.getBean(Main.class);
-        main.start();
+        applicationContext.getBean(Main.class).start();
+
+    }
+
+    public void init() {
+        if (reInit) {
+            System.out.println("removing from DB");
+            orderController.removeAllOrders();
+            dishController.removeAllDishes();
+            employeeController.removeAllEmployees();
+
+            System.out.println("populating DB");
+            employeeController.initEmployee();
+            dishController.initDish();
+            orderController.initOrder();
+        }
 
     }
 
     private void start() {
-        employeeController.createEmployee();
-        dishController.createDish();
-        List<String> dishes1 = new ArrayList<>();
-        dishes1.add("Plov");
-        dishes1.add("Salad");
 
-        orderController.createOrder("John", dishes1, 1);
-
-        List<String> dishes2 = new ArrayList<>();
-        dishes2.add("Potato");
-        dishes2.add("Salad");
-
-        orderController.createOrder("John", dishes2, 2);
-
-        orderController.getAllOrders();
-        orderController.printAllOrders();
+        employeeController.printEmployee(2L);
     }
 
     public void setEmployeeController(EmployeeController employeeController) {
@@ -54,5 +56,8 @@ public class Main {
 
     public void setOrderController(OrderController orderController) {
         this.orderController = orderController;
+    }
+
+    public void setReInit(String reInit) {
     }
 }

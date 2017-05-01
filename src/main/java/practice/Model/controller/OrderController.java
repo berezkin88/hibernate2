@@ -2,6 +2,7 @@ package practice.Model.controller;
 
 import org.springframework.transaction.annotation.Transactional;
 import practice.Model.Dish;
+import practice.Model.DishCategory;
 import practice.Model.Orders;
 import practice.Model.dao.Hibernate.DishDao;
 import practice.Model.dao.Hibernate.EmployeeDao;
@@ -19,19 +20,55 @@ public class OrderController {
     private OrderDao orderDao;
 
     @Transactional
+    public void initOrder(){
+        List<String> dishes1 = new ArrayList<>();
+        dishes1.add("Plov");
+        dishes1.add("Salad");
+
+        createOrder("John", dishes1, 1);
+
+        List<String> dishes2 = new ArrayList<>();
+        dishes2.add("Plov");
+        dishes2.add("Potato");
+
+        createOrder("John", dishes2, 2);
+
+        List<String> dishes3 = new ArrayList<>();
+        dishes3.add("Potato");
+        dishes3.add("Salad");
+
+        createOrder("Mary", dishes3, 3);
+
+        orderDao.save(createOrderWithIceCream());
+    }
+
+    @Transactional
     public void createOrder(String waiterName, List<String> dishes, int tableNumber) {
         Orders order = new Orders();
         order.setWaiter(employeeDao.findByName(waiterName));
         order.setDishes(createDishes(dishes));
         order.setTableNumber(tableNumber);
         order.setOrderDate(new Date());
-
-//        Set<Orders> orders = new HashSet<>(orderDao.findAll());
-//
-//        if (!orders.contains(order)){
-//            orderDao.save(order);
-//        }
         orderDao.save(order);
+    }
+
+    public Orders createOrderWithIceCream(){
+        List<Dish> dishes = new ArrayList<>();
+
+        Dish iceCream = new Dish();
+        iceCream.setName("Ice Cream");
+        iceCream.setCategory(DishCategory.DESERT);
+        iceCream.setWeight(100.0F);
+        iceCream.setPrice(3.0F);
+
+        dishes.add(iceCream);
+
+        Orders order = new Orders();
+        order.setWaiter(employeeDao.findByName("Mary"));
+        order.setDishes(dishes);
+        order.setTableNumber(4);
+        order.setOrderDate(new Date());
+        return  order;
     }
 
     @Transactional
@@ -53,6 +90,11 @@ public class OrderController {
         getAllOrders().forEach(System.out::println);
     }
 
+    @Transactional
+    public void removeAllOrders() {
+        orderDao.removeAll();
+    }
+
     public void setEmployeeDao(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;
     }
@@ -64,6 +106,7 @@ public class OrderController {
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
     }
+
 
 
 }

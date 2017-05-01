@@ -22,7 +22,7 @@ public class HEmployeeDao implements EmployeeDao {
 
     @Override
     public Employee load(Long id) {
-        return null;
+        return sessionFactory.getCurrentSession().load(Employee.class, id);
     }
 
     @Override
@@ -38,6 +38,11 @@ public class HEmployeeDao implements EmployeeDao {
     @Override
     public void remove(Employee employee) {
         sessionFactory.getCurrentSession().delete(employee);
+    }
+
+    @Override
+    public void removeAll() {
+        sessionFactory.getCurrentSession().createQuery("delete from Employee").executeUpdate();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
